@@ -1,57 +1,59 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
-const productSchema = new mongoose.schema({
-    name:{
-        type:string,
-        required: [true, "Please Enter Product Name"],
+const productSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Please Enter Product Name"],
+  },
+  description: {
+    type: String,
+    required: [true, "Please Enter Product Description"],
+  },
+  price: {
+    type: Number,
+    required: [true, "Please Enter Product Price"],
+    max: [9999999, "Price cannot exceed 7 digits"],
+  },
+  ratings: {
+    type: Number,
+    default: 0,
+  },
+  images: [
+    {
+      public_id: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
-    description:{
-        type:string,
-        required: [true, "Please Enter Product Description"],
+  ],
+  category: {
+    type: String,
+    required: [true, "Please Enter Product Category"],
+  },
+  stock: {
+    type: Number,
+    required: [true, "Please Enter Product Stock"],
+    default: 1,
+  },
+  numOfReviews: {
+    type: Number,
+    default: 0,
+  },
+  reviews: [
+    {
+      name: { type: String, required: true },
+      rating: { type: Number, required: true },
+      comment: { type: String, required: true },
     },
-    price:{
-        type:Number,
-        required: [true, "Please Enter Product Price"],
-        maxlength:[7, "Please Cannot Exceed 7 Digit"],
-    }, 
-    ratings: {
-        type: Number,
-        default: 0,
-    },
-    image: [
-        {
-            public_id: {
-                type:string,
-                required:[true],
-            },
-            url: {type:string, required:[true]},
-        },
-    ],
-    catogery: {
-        type:string, 
-        required: [true, "Please Enter Product Catogery"],
-    },
-    stock: {
-        type:Number,
-        required: [true, "Please Enter Product Stock"],
-        default:1,
-    },
-    numOfReviews: {
-        type:Number,
-        default:0,
-    },
-    reviews: [
-        {
-            name:{type:string, required: true}, 
-            rating:{type:Number, required: true},
-            Comment:{type:string, required:true},
-        }
-    ],
-    createdAt: {
-        type:Date,
-        default: Date.now,
-    },
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-export default mongoose.model("product",productSchema);
+export default mongoose.model("Product", productSchema);

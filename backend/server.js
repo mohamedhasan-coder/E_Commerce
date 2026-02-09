@@ -7,6 +7,24 @@ const PORT = process.env.PORT || 3000;
 
 connectDB();
 
-app.listen(3000, () => {
+// Uncaught Exception Error Handling
+process.on("uncaughtException",(err) =>{
+    console.log(`Error : ${err.message}`);
+    console.log(`Server is Shutting Down, Due to Uncaught Exception`);
+    
+    process.exit(1);
+});
+
+const servr = app.listen(3000, () => {
     console.log(`Server Is Running on http://localhost:${PORT}`);
+});
+
+// Unhandled Exception
+process.on("unhandledRejection", (err) => {
+    console.log(`Error : ${err.message}`);
+    console.log(`Server is Shutting Down, Due to Unhandled Rejection`);
+
+    server.close(() => {
+        process.exit(1);
+    });
 });
